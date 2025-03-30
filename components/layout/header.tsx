@@ -27,7 +27,7 @@ const ListItem = ({ className, title, href, children }: {
         <Link
           href={href}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:scale-105 hover:shadow-md",
             className
           )}
         >
@@ -51,8 +51,9 @@ export function Header() {
   return (
     <header className="border-b w-full relative z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px] flex items-center justify-between py-4">
-        <Link href="/" className="font-bold text-xl">
-          Budgify
+        <Link href="/" className="font-bold text-xl relative group">
+          <span className="relative z-10">Budgify</span>
+          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
         </Link>
         
         <div className="md:hidden">
@@ -62,11 +63,11 @@ export function Header() {
         </div>
         
         <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
+          <NavigationMenuList className="gap-1">
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">Features</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] animate-in fade-in duration-200 slide-in-from-top-5">
                   <ListItem
                     href="/features/ausgabenanalyse"
                     title="Ausgabenanalyse"
@@ -95,9 +96,9 @@ export function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Preise</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">Preise</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] animate-in fade-in duration-200 slide-in-from-top-5">
                   <ListItem
                     href="/preise/kostenlos"
                     title="Kostenloser Plan"
@@ -120,9 +121,9 @@ export function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Ressourcen</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">Ressourcen</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] animate-in fade-in duration-200 slide-in-from-top-5">
                   <ListItem
                     href="/ressourcen/blog"
                     title="Blog"
@@ -152,8 +153,9 @@ export function Header() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/kontakt" legacyBehavior passHref>
-                <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                  Kontakt
+                <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent/40 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 relative">
+                  <span>Kontakt</span>
+                  <span className="absolute bottom-1 left-2 right-2 h-0.5 bg-primary scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
@@ -161,13 +163,13 @@ export function Header() {
         </NavigationMenu>
         
         <div className="hidden md:block">
-          <Button>Kostenlos starten</Button>
+          <Button className="transition-all duration-300 hover:scale-105 hover:shadow-md">Kostenlos starten</Button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-background md:hidden z-50 pt-16">
+        <div className="fixed inset-0 bg-background md:hidden z-50 pt-16 animate-in slide-in-from-top-5 duration-300">
           <div className="container mx-auto px-4 sm:px-6 py-6 h-full overflow-y-auto">
             <div className="flex flex-col space-y-6">
               <div className="border-b pb-4">
@@ -176,7 +178,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/features/ausgabenanalyse" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Ausgabenanalyse
@@ -185,7 +187,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/features/budgetplanung" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Budgetplanung
@@ -194,7 +196,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/features/finanzielle-ziele" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Finanzielle Ziele
@@ -203,7 +205,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/features/sparkonten" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Sparkonten
@@ -218,7 +220,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/preise/kostenlos" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Kostenloser Plan
@@ -227,7 +229,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/preise/premium" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Premium Plan
@@ -236,7 +238,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/preise/familie" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Familienplan
@@ -251,7 +253,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/ressourcen/blog" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Blog
@@ -260,7 +262,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/ressourcen/faq" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       FAQ
@@ -269,7 +271,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/ressourcen/tutorials" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Tutorials
@@ -278,7 +280,7 @@ export function Header() {
                   <li>
                     <Link 
                       href="/ressourcen/hilfe" 
-                      className="block py-2 text-muted-foreground hover:text-foreground"
+                      className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                       onClick={toggleMobileMenu}
                     >
                       Hilfe & Support
@@ -290,7 +292,7 @@ export function Header() {
               <div className="pb-4">
                 <Link 
                   href="/kontakt" 
-                  className="block py-2 text-muted-foreground hover:text-foreground"
+                  className="block py-2 text-muted-foreground hover:text-foreground transition-all duration-200 hover:translate-x-1"
                   onClick={toggleMobileMenu}
                 >
                   Kontakt
@@ -298,7 +300,7 @@ export function Header() {
               </div>
 
               <div className="pt-2">
-                <Button className="w-full" onClick={toggleMobileMenu}>
+                <Button className="w-full transition-all duration-300 hover:shadow-md" onClick={toggleMobileMenu}>
                   <Link href="/signup">Kostenlos starten</Link>
                 </Button>
               </div>
