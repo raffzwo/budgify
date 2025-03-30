@@ -7,6 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff, LogIn, ArrowLeft } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,9 +40,11 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const { signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   // Form-Hook initialisieren
   const form = useForm<LoginFormValues>({
@@ -52,27 +55,49 @@ export default function LoginPage() {
     },
   });
 
-  function onSubmit(data: LoginFormValues) {
+  async function onSubmit(data: LoginFormValues) {
     setIsLoading(true);
+    setAuthError(null);
     
-    // Fortschrittsbalken simulieren
+    // Fortschrittsbalken starten
     const interval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
+        if (prev >= 80) {
           clearInterval(interval);
-          // Nach "Login" zur Startseite navigieren (für Demo-Zwecke)
-          setTimeout(() => {
-            setIsLoading(false);
-            router.push("/");
-          }, 500);
-          return 100;
+          return 80;
         }
         return prev + 10;
       });
     }, 100);
     
-    // Demo-Zwecke: Hier würde normalerweise die Login-Logik implementiert werden
-    console.log("Login-Daten:", data);
+    try {
+      // Supabase Auth verwenden
+      const { success, error } = await signIn(data.email, data.password);
+      
+      if (success) {
+        // Fortschrittsbalken auf 100% setzen
+        setProgress(100);
+        setTimeout(() => {
+          setIsLoading(false);
+          // Nach erfolgreicher Anmeldung zur Dashboard-Seite navigieren
+          router.push("/dashboard");
+        }, 500);
+      } else {
+        clearInterval(interval);
+        setProgress(0);
+        setIsLoading(false);
+        if (error) {
+          // Fehlermeldung anzeigen
+          setAuthError("E-Mail oder Passwort ist falsch. Bitte versuche es erneut.");
+        }
+      }
+    } catch (error) {
+      clearInterval(interval);
+      setProgress(0);
+      setIsLoading(false);
+      setAuthError("Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es später erneut.");
+      console.error("Login-Fehler:", error);
+    }
   }
 
   return (
@@ -87,6 +112,12 @@ export default function LoginPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {authError && (
+                <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                  <p className="text-sm text-destructive text-center">{authError}</p>
+                </div>
+              )}
+              
               <FormField
                 control={form.control}
                 name="email"

@@ -30,6 +30,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Validierungsschema für Schritt 1 (Name und E-Mail)
 const step1Schema = z.object({
@@ -91,6 +92,9 @@ export default function RegisterPage() {
     }
   });
 
+  const { signUp } = useAuth();
+  const [authError, setAuthError] = useState<string | null>(null);
+
   function nextStep() {
     if (step === 1) {
       // Validiere Formular 1 und gehe erst zum nächsten Schritt, wenn es gültig ist
@@ -112,30 +116,57 @@ export default function RegisterPage() {
   }
 
   // Handler für Schritt 2 Submit
-  function onSubmitStep2(data: Step2FormValues) {
+  async function onSubmitStep2(data: Step2FormValues) {
     setIsLoading(true);
+    setAuthError(null);
     
-    // Kombiniere die Daten aus beiden Schritten
-    const completeData = { ...formData, ...data };
-    
-    // Fortschrittsbalken simulieren
+    // Fortschrittsbalken starten
     const interval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
+        if (prev >= 80) {
           clearInterval(interval);
-          // Nach "Registrierung" zur Startseite navigieren (für Demo-Zwecke)
-          setTimeout(() => {
-            setIsLoading(false);
-            router.push("/");
-          }, 500);
-          return 100;
+          return 80;
         }
         return prev + 10;
       });
     }, 100);
-    
-    // Demo-Zwecke: Hier würde normalerweise die Registrierungs-Logik implementiert werden
-    console.log("Registrierungsdaten:", completeData);
+
+    try {
+      // Kombiniere die Daten aus beiden Schritten
+      const completeData = { ...formData, ...data };
+      
+      // Registriere den Benutzer mit Supabase
+      const { success, error } = await signUp(
+        completeData.email || "", 
+        completeData.password || "", 
+        { name: completeData.name || "" }
+      );
+      
+      if (success) {
+        // Fortschrittsbalken auf 100% setzen
+        setProgress(100);
+        setTimeout(() => {
+          setIsLoading(false);
+          // Nach erfolgreicher Registrierung zur Bestätigungsseite navigieren
+          router.push("/register/confirm");
+        }, 500);
+      } else {
+        clearInterval(interval);
+        setProgress(0);
+        setIsLoading(false);
+        if (error) {
+          // Fehlermeldung anzeigen
+          setAuthError("Es ist ein Fehler bei der Registrierung aufgetreten. Bitte überprüfe deine Eingaben.");
+          console.error("Registrierungsfehler:", error);
+        }
+      }
+    } catch (error) {
+      clearInterval(interval);
+      setProgress(0);
+      setIsLoading(false);
+      setAuthError("Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es später erneut.");
+      console.error("Registrierungsfehler:", error);
+    }
   }
 
   return (
@@ -206,6 +237,12 @@ export default function RegisterPage() {
           {step === 2 && (
             <Form {...form2}>
               <form onSubmit={form2.handleSubmit(onSubmitStep2)} className="space-y-6">
+                {authError && (
+                  <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                    <p className="text-sm text-destructive text-center">{authError}</p>
+                  </div>
+                )}
+                
                 <FormField
                   control={form2.control}
                   name="password"
