@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, LogOut, User, Settings } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,16 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 const ListItem = ({ className, title, href, children }: { 
@@ -44,9 +55,61 @@ const ListItem = ({ className, title, href, children }: {
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, signOut, isLoading } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  // Verwende useEffect, um den 'mounted'-Status zu setzen, sobald die Komponente auf dem Client gerendert wurde
+  // Dies verhindert Hydration-Fehler durch unterschiedliche Server- und Client-Renderings
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Funktion zum Abmelden des Benutzers
+  const handleSignOut = async () => {
+    await signOut();
+    setMobileMenuOpen(false);
+  };
+
+  // Funktion, um den Avatar-Fallback-Text zu generieren
+  const getAvatarText = () => {
+    if (!user) return "?";
+    
+    if (user.user_metadata?.name) {
+      return user.user_metadata.name.charAt(0).toUpperCase();
+    }
+    
+    if (user.user_metadata?.display_name) {
+      return user.user_metadata.display_name.charAt(0).toUpperCase();
+    }
+    
+    if (user.email) {
+      return user.email.charAt(0).toUpperCase();
+    }
+    
+    return "U";
+  };
+
+  // Benutze diese Funktion, um den Namen des Benutzers anzuzeigen
+  const getUserDisplayName = () => {
+    if (!user) return "";
+    
+    if (user.user_metadata?.name) {
+      return user.user_metadata.name;
+    }
+    
+    if (user.user_metadata?.display_name) {
+      return user.user_metadata.display_name;
+    }
+    
+    if (user.email) {
+      return user.email.split('@')[0];
+    }
+    
+    return "Benutzer";
   };
 
   return (
@@ -168,17 +231,77 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         
+        {/* Desktop Authentication Section */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/login">
-            <Button variant="outline" className="transition-all duration-300 hover:shadow-md">
-              Login
-            </Button>
-          </Link>
-          <Link href="/register">
-            <Button className="transition-all duration-300 hover:scale-105 hover:shadow-md">
-              Registrieren
-            </Button>
-          </Link>
+          {mounted && !isLoading ? (
+            user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="relative h-10 w-10 rounded-full"
+                    aria-label="Benutzermenu öffnen"
+                  >
+                    <Avatar className="h-10 w-10 transition-all duration-200 hover:shadow-md">
+                      <AvatarImage src="" alt={getUserDisplayName()} />
+                      <AvatarFallback className="bg-primary/10 text-primary">
+                        {getAvatarText()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{getUserDisplayName()}</p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <Link href="/dashboard" className="cursor-pointer flex items-center w-full">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/settings" className="cursor-pointer flex items-center w-full">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Einstellungen</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    onClick={handleSignOut}
+                    className="cursor-pointer flex items-center text-destructive focus:text-destructive"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Abmelden</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="outline" className="transition-all duration-300 hover:shadow-md">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button className="transition-all duration-300 hover:scale-105 hover:shadow-md">
+                    Registrieren
+                  </Button>
+                </Link>
+              </>
+            )
+          ) : (
+            // Zeige einen Platzhalter während des Ladens
+            <div className="h-10 w-10 rounded-full bg-muted animate-pulse"></div>
+          )}
         </div>
       </div>
       <Separator />
@@ -318,17 +441,63 @@ export function Header() {
                 </Link>
               </div>
 
+              {/* Mobile Authentication Section */}
               <div className="flex flex-col gap-3 pt-4">
-                <Link href="/login">
-                  <Button variant="outline" className="w-full transition-all duration-300 hover:shadow-md">
-                    Login
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button className="w-full transition-all duration-300 hover:shadow-md">
-                    Registrieren
-                  </Button>
-                </Link>
+                {mounted && !isLoading ? (
+                  user ? (
+                    <>
+                      <div className="flex items-center gap-3 mb-2">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src="" alt={getUserDisplayName()} />
+                          <AvatarFallback className="bg-primary/10 text-primary">
+                            {getAvatarText()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">{getUserDisplayName()}</p>
+                          <p className="text-xs text-muted-foreground">{user.email}</p>
+                        </div>
+                      </div>
+                      <Separator />
+                      <Link href="/dashboard" onClick={toggleMobileMenu}>
+                        <Button variant="outline" className="w-full justify-start" size="sm">
+                          <User className="mr-2 h-4 w-4" />
+                          Dashboard
+                        </Button>
+                      </Link>
+                      <Link href="/settings" onClick={toggleMobileMenu}>
+                        <Button variant="outline" className="w-full justify-start" size="sm">
+                          <Settings className="mr-2 h-4 w-4" />
+                          Einstellungen
+                        </Button>
+                      </Link>
+                      <Button 
+                        onClick={handleSignOut} 
+                        variant="destructive" 
+                        className="w-full justify-start mt-2"
+                        size="sm"
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Abmelden
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Link href="/login">
+                        <Button variant="outline" className="w-full transition-all duration-300 hover:shadow-md">
+                          Login
+                        </Button>
+                      </Link>
+                      <Link href="/register">
+                        <Button className="w-full transition-all duration-300 hover:shadow-md">
+                          Registrieren
+                        </Button>
+                      </Link>
+                    </>
+                  )
+                ) : (
+                  <div className="h-10 bg-muted rounded-md animate-pulse"></div>
+                )}
               </div>
             </div>
           </div>
