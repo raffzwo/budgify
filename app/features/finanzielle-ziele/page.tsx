@@ -176,7 +176,7 @@ export default function FinanzielleZielePage() {
                           }}
                         />
                         <ChartTooltip
-                          cursor={{ stroke: 'var(--border)', strokeWidth: 1 }}
+                          cursor={false}
                           content={
                             <ChartTooltipContent
                               indicator="dot"
