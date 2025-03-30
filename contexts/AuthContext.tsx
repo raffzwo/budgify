@@ -4,6 +4,13 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 
+// Typen für Benutzermetadaten
+interface UserMetadata {
+  name?: string;
+  display_name?: string;
+  [key: string]: unknown;
+}
+
 // Typen für den Auth-Context
 type AuthContextType = {
   user: User | null
@@ -18,6 +25,10 @@ type AuthContextType = {
     error: Error | null
   }>
   signOut: () => Promise<void>
+  updateProfile: (data: { displayName?: string }) => Promise<{
+    success: boolean
+    error: Error | null
+  }>
 }
 
 // Erstelle den Context mit Standardwerten
@@ -28,6 +39,7 @@ const AuthContext = createContext<AuthContextType>({
   signUp: async () => ({ success: false, error: new Error('Not implemented') }),
   signIn: async () => ({ success: false, error: new Error('Not implemented') }),
   signOut: async () => {},
+  updateProfile: async () => ({ success: false, error: new Error('Not implemented') }),
 })
 
 // Hook für den Zugriff auf den Auth-Context
@@ -70,11 +82,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Registrierungsfunktion
   const signUp = async (email: string, password: string, metadata?: object) => {
     try {
+      // Stelle sicher, dass die Metadaten korrekt formatiert sind
+      const userData: UserMetadata = metadata ? { ...metadata as object } : {}
+      
+      // Wenn es ein name-Feld gibt, stelle sicher, dass es als display_name gespeichert wird
+      if (userData && 'name' in userData && typeof userData.name === 'string') {
+        userData.display_name = userData.name
+      }
+      
+      console.log('Registrierungsdaten:', { email, userData })
+      
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: metadata,
+          data: userData,
         },
       })
 
@@ -112,6 +134,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signOut = async () => {
     await supabase.auth.signOut()
   }
+  
+  // Funktion zum Aktualisieren des Benutzerprofils
+  const updateProfile = async (data: { displayName?: string }) => {
+    try {
+      if (!user) {
+        throw new Error('Kein Benutzer angemeldet')
+      }
+      
+      const updates = {
+        data: {
+          // Behalte bestehende Metadaten bei
+          ...user.user_metadata,
+        } as UserMetadata
+      }
+      
+      // Aktualisiere den Anzeigenamen, wenn vorhanden
+      if (data.displayName) {
+        updates.data.name = data.displayName
+        updates.data.display_name = data.displayName
+      }
+      
+      console.log('Profilaktualisierung:', updates)
+      
+      const { error } = await supabase.auth.updateUser(updates)
+      
+      if (error) {
+        throw error
+      }
+      
+      return { success: true, error: null }
+    } catch (error) {
+      console.error('Fehler bei der Profilaktualisierung:', error)
+      return { success: false, error: error as Error }
+    }
+  }
 
   const value = {
     user,
@@ -120,6 +177,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signUp,
     signIn,
     signOut,
+    updateProfile,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
