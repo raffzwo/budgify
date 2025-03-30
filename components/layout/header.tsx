@@ -66,7 +66,9 @@ export function Header() {
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="gap-1">
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">Features</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">
+                Features
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] animate-in fade-in duration-200 slide-in-from-top-5">
                   <ListItem
@@ -97,7 +99,9 @@ export function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">Preise</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">
+                Preise
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] animate-in fade-in duration-200 slide-in-from-top-5">
                   <ListItem
@@ -122,7 +126,9 @@ export function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">Ressourcen</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="transition-all duration-200 data-[state=open]:bg-accent/60 hover:bg-accent/40 data-[state=open]:text-accent-foreground hover:text-accent-foreground">
+                Ressourcen
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] animate-in fade-in duration-200 slide-in-from-top-5">
                   <ListItem
@@ -154,9 +160,8 @@ export function Header() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/kontakt" legacyBehavior passHref>
-                <NavigationMenuLink className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent/40 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 relative">
+                <NavigationMenuLink className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent/40 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 relative hover:after:scale-x-100 after:absolute after:bottom-1 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:scale-x-0 after:transition-transform after:duration-300">
                   <span>Kontakt</span>
-                  <span className="absolute bottom-1 left-2 right-2 h-0.5 bg-primary scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
