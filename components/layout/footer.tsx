@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export function Footer() {
   return (
-    <footer className="border-t py-8 w-full">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px]">
+    <footer className="py-8 w-full">
+      <Separator />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px] pt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <h3 className="font-bold text-lg mb-4">Budgify</h3>
@@ -76,7 +80,8 @@ export function Footer() {
           </div>
         </div>
         
-        <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
+        <div className="mt-8 text-center text-sm text-muted-foreground">
+          <Separator className="mb-6" />
           <p>&copy; {new Date().getFullYear()} Budgify. Alle Rechte vorbehalten.</p>
         </div>
       </div>

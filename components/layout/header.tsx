@@ -13,6 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 const ListItem = ({ className, title, href, children }: { 
@@ -49,7 +50,7 @@ export function Header() {
   };
 
   return (
-    <header className="border-b w-full relative z-50">
+    <header className="w-full relative z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px] flex items-center justify-between py-4">
         <Link href="/" className="font-bold text-xl relative group">
           <span className="relative z-10">Budgify</span>
@@ -166,13 +167,14 @@ export function Header() {
           <Button className="transition-all duration-300 hover:scale-105 hover:shadow-md">Kostenlos starten</Button>
         </div>
       </div>
+      <Separator />
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 bg-background md:hidden z-50 pt-16 animate-in slide-in-from-top-5 duration-300" key="mobile-menu">
           <div className="container mx-auto px-4 sm:px-6 py-6 h-full overflow-y-auto">
             <div className="flex flex-col space-y-6">
-              <div className="border-b pb-4">
+              <div className="pb-4">
                 <h3 className="text-lg font-semibold mb-3">Features</h3>
                 <ul className="space-y-2">
                   <li>
@@ -212,9 +214,10 @@ export function Header() {
                     </Link>
                   </li>
                 </ul>
+                <Separator className="mt-4" />
               </div>
 
-              <div className="border-b pb-4">
+              <div className="pb-4">
                 <h3 className="text-lg font-semibold mb-3">Preise</h3>
                 <ul className="space-y-2">
                   <li>
@@ -245,9 +248,10 @@ export function Header() {
                     </Link>
                   </li>
                 </ul>
+                <Separator className="mt-4" />
               </div>
 
-              <div className="border-b pb-4">
+              <div className="pb-4">
                 <h3 className="text-lg font-semibold mb-3">Ressourcen</h3>
                 <ul className="space-y-2">
                   <li>
@@ -287,6 +291,7 @@ export function Header() {
                     </Link>
                   </li>
                 </ul>
+                <Separator className="mt-4" />
               </div>
 
               <div className="pb-4">

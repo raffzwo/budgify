@@ -12,6 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 
 export default function AusgabenanalysePage() {
   const analyseFeatures = [
@@ -91,7 +92,8 @@ export default function AusgabenanalysePage() {
             ))}
           </div>
 
-          <div className="mt-16 border-t pt-16">
+          <div className="mt-16">
+            <Separator className="my-8" />
             <h2 className="text-3xl font-bold mb-8 text-center">Wie funktioniert die Ausgabenanalyse?</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
