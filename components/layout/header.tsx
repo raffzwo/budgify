@@ -169,7 +169,7 @@ export function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-background md:hidden z-50 pt-16 animate-in slide-in-from-top-5 duration-300">
+        <div className="fixed inset-0 bg-background md:hidden z-50 pt-16 animate-in slide-in-from-top-5 duration-300" key="mobile-menu">
           <div className="container mx-auto px-4 sm:px-6 py-6 h-full overflow-y-auto">
             <div className="flex flex-col space-y-6">
               <div className="border-b pb-4">

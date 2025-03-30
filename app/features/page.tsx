@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { BarChart3, Wallet, Target, PiggyBank, Bell, TrendingUp } from "lucide-react";
 

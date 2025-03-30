@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { BarChart3, PieChart, Layers, LineChart, ArrowRight } from "lucide-react";
 
