@@ -142,7 +142,7 @@ export default function BudgetplanungPage() {
                         <YAxis
                           tickLine={false}
                           axisLine={false}
-                          tickFormatter={(value) => `${value}€`}
+                          tickFormatter={(value) => `${value}€ `}
                           fontSize={12}
                           tickMargin={8}
                         />
@@ -161,11 +161,11 @@ export default function BudgetplanungPage() {
                           isAnimationActive={true}
                         />
                         <ChartTooltip
-                          cursor={{ fill: 'var(--muted)', opacity: 0.15 }}
+                          cursor={{ stroke: 'var(--border)', strokeWidth: 1 }}
                           content={
                             <ChartTooltipContent
                               indicator="dot"
-                              formatter={(value, name) => [`${value}€`, name]}
+                              formatter={(value, name) => [`${value}€ `, name]}
                             />
                           }
                         />

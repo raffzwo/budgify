@@ -135,7 +135,7 @@ export default function SparkontenPage() {
                       ))}
                     </Pie>
                     <Tooltip 
-                      formatter={(value) => `${Number(value).toLocaleString('de-DE')}€`}
+                      formatter={(value) => `${Number(value).toLocaleString('de-DE')}€ `}
                       labelFormatter={(name) => `${name}`}
                       contentStyle={{
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',

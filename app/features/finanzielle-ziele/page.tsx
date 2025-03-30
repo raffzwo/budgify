@@ -149,7 +149,7 @@ export default function FinanzielleZielePage() {
                         <YAxis
                           tickLine={false}
                           axisLine={false}
-                          tickFormatter={(value) => `${value}€`}
+                          tickFormatter={(value) => `${value}€ `}
                           fontSize={12}
                           tickMargin={8}
                         />
@@ -181,7 +181,7 @@ export default function FinanzielleZielePage() {
                             <ChartTooltipContent
                               indicator="dot"
                               formatter={(value, name) => [
-                                name === "Fortschritt" ? `${value}€ (${Math.round(Number(value)/100)}%)` : `${value}€`, 
+                                name === "Fortschritt" ? `${value}€ (${Math.round(Number(value)/100)}%)` : `${value}€ `,
                                 name
                               ]}
                             />
