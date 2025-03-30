@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { BarChart3, ChevronLeft, PieChart, Layers, LineChart, ArrowRight } from "lucide-react";
+import { BarChart3, PieChart, Layers, LineChart, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function AusgabenanalysePage() {
   const analyseFeatures = [
@@ -26,10 +34,21 @@ export default function AusgabenanalysePage() {
     <div className="w-full">
       <div className="bg-muted py-16 w-full">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px]">
-          <Link href="/features" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Zurück zu Features
-          </Link>
+          <Breadcrumb className="mb-6">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Startseite</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/features">Features</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Ausgabenanalyse</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
           
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="md:w-1/2">
