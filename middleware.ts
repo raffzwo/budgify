@@ -2,8 +2,13 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
-  // Prüfe, ob die Route login oder register ist
-  const isAuthRoute = request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register'
+  // Prüfe, ob die Route login, register oder verified ist
+  const isAuthRoute = request.nextUrl.pathname === '/login' || 
+                     request.nextUrl.pathname === '/register' ||
+                     request.nextUrl.pathname.startsWith('/register/confirm')
+  
+  // Prüfe, ob es sich um die E-Mail-Bestätigungsseite handelt
+  const isVerifiedRoute = request.nextUrl.pathname === '/auth/verified'
   
   const response = NextResponse.next()
   
@@ -57,6 +62,12 @@ export async function middleware(request: NextRequest) {
     console.log('Middleware - Session vorhanden:', !!session)
     console.log('Middleware - Ist geschützte Route:', isProtectedRoute)
     console.log('Middleware - Ist Auth-Route:', isAuthRoute)
+    console.log('Middleware - Ist Verifikationsroute:', isVerifiedRoute)
+    
+    // Wenn es die Verifikationsroute ist, immer Zugriff erlauben (keine Umleitung)
+    if (isVerifiedRoute) {
+      return response
+    }
     
     // Leite zu /login um, wenn es eine geschützte Route ist und der Benutzer nicht angemeldet ist
     if (isProtectedRoute && !session) {
@@ -76,6 +87,11 @@ export async function middleware(request: NextRequest) {
     console.error('Middleware - Fehler bei der Session-Prüfung:', error)
     
     // Bei einem Fehler in der Session-Prüfung:
+    // Verifikationsroute immer erlauben
+    if (request.nextUrl.pathname === '/auth/verified') {
+      return response
+    }
+    
     // Wenn es eine geschützte Route ist, zur Login-Seite umleiten (sicherer)
     const protectedRoutes = ['/dashboard', '/profile', '/settings']
     if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {

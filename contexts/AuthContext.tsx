@@ -29,6 +29,11 @@ type AuthContextType = {
     success: boolean
     error: Error | null
   }>
+  resendConfirmationEmail: (email: string) => Promise<{
+    success: boolean
+    error: Error | null
+  }>
+  lastRegisteredEmail: string | null
 }
 
 // Erstelle den Context mit Standardwerten
@@ -40,6 +45,8 @@ const AuthContext = createContext<AuthContextType>({
   signIn: async () => ({ success: false, error: new Error('Not implemented') }),
   signOut: async () => {},
   updateProfile: async () => ({ success: false, error: new Error('Not implemented') }),
+  resendConfirmationEmail: async () => ({ success: false, error: new Error('Not implemented') }),
+  lastRegisteredEmail: null
 })
 
 // Hook für den Zugriff auf den Auth-Context
@@ -50,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [lastRegisteredEmail, setLastRegisteredEmail] = useState<string | null>(null)
 
   useEffect(() => {
     // Lade die aktuelle Session beim ersten Rendern
@@ -59,6 +67,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data: { session: initialSession } } = await supabase.auth.getSession()
       setSession(initialSession)
       setUser(initialSession?.user ?? null)
+
+      // Beim Start versuchen wir, die zuletzt registrierte E-Mail aus dem localStorage zu laden
+      if (typeof window !== 'undefined') {
+        const storedEmail = localStorage.getItem('lastRegisteredEmail')
+        if (storedEmail) {
+          setLastRegisteredEmail(storedEmail)
+        }
+      }
 
       setIsLoading(false)
 
@@ -92,16 +108,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       console.log('Registrierungsdaten:', { email, userData })
       
+      // URL für die Weiterleitung nach der E-Mail-Bestätigung
+      // Der Hostname wird automatisch aus dem Browser ermittelt
+      const redirectUrl = typeof window !== 'undefined' ? 
+        `${window.location.origin}/auth/verified` : 
+        undefined;
+        
+      console.log('Weiterleitung nach Bestätigung:', redirectUrl);
+      
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: userData,
+          emailRedirectTo: redirectUrl
         },
       })
 
       if (error) {
         throw error
+      }
+
+      // Speichere die E-Mail für die erneute Bestätigungsmail-Funktion
+      setLastRegisteredEmail(email)
+      
+      // Speichere die E-Mail auch im localStorage, um sie bei Browsersitzungen beizubehalten
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('lastRegisteredEmail', email)
       }
 
       return { success: true, error: null }
@@ -169,6 +202,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return { success: false, error: error as Error }
     }
   }
+  
+  // Funktion zum erneuten Senden der Bestätigungsmail
+  const resendConfirmationEmail = async (email: string) => {
+    try {
+      // URL für die Weiterleitung nach der E-Mail-Bestätigung
+      const redirectUrl = typeof window !== 'undefined' ? 
+        `${window.location.origin}/auth/verified` : 
+        undefined;
+      
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+        options: {
+          emailRedirectTo: redirectUrl,
+        }
+      })
+      
+      if (error) {
+        throw error
+      }
+      
+      return { success: true, error: null }
+    } catch (error) {
+      console.error('Fehler beim erneuten Senden der Bestätigungsmail:', error)
+      return { success: false, error: error as Error }
+    }
+  }
 
   const value = {
     user,
@@ -178,6 +238,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signIn,
     signOut,
     updateProfile,
+    resendConfirmationEmail,
+    lastRegisteredEmail
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
