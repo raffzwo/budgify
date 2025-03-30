@@ -168,8 +168,17 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         
-        <div className="hidden md:block">
-          <Button className="transition-all duration-300 hover:scale-105 hover:shadow-md">Kostenlos starten</Button>
+        <div className="hidden md:flex items-center gap-3">
+          <Link href="/login">
+            <Button variant="outline" className="transition-all duration-300 hover:shadow-md">
+              Login
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button className="transition-all duration-300 hover:scale-105 hover:shadow-md">
+              Registrieren
+            </Button>
+          </Link>
         </div>
       </div>
       <Separator />
@@ -309,10 +318,17 @@ export function Header() {
                 </Link>
               </div>
 
-              <div className="pt-2">
-                <Button className="w-full transition-all duration-300 hover:shadow-md" onClick={toggleMobileMenu}>
-                  <Link href="/signup">Kostenlos starten</Link>
-                </Button>
+              <div className="flex flex-col gap-3 pt-4">
+                <Link href="/login">
+                  <Button variant="outline" className="w-full transition-all duration-300 hover:shadow-md">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button className="w-full transition-all duration-300 hover:shadow-md">
+                    Registrieren
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
