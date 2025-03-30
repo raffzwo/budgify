@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, PieChart, Layers, LineChart, ArrowRight } from "lucide-react";
+import { BarChart3, PieChart as PieChartIcon, Layers, LineChart, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +13,22 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+
+// Beispieldaten für das Kreisdiagramm
+const ausgabenData = [
+  { name: "Lebensmittel", value: 420, color: "#3B82F6" },
+  { name: "Wohnen", value: 850, color: "#10B981" },
+  { name: "Transport", value: 210, color: "#F59E0B" },
+  { name: "Unterhaltung", value: 180, color: "#8B5CF6" },
+  { name: "Bildung", value: 120, color: "#EC4899" },
+  { name: "Sonstiges", value: 150, color: "#6B7280" },
+];
 
 export default function AusgabenanalysePage() {
   const analyseFeatures = [
     {
-      icon: <PieChart className="h-8 w-8" />,
+      icon: <PieChartIcon className="h-8 w-8" />,
       title: "Kategorische Analyse",
       description: "Sieh dir an, wie sich deine Ausgaben auf verschiedene Kategorien verteilen, um Sparmöglichkeiten zu identifizieren."
     },
@@ -98,8 +109,44 @@ export default function AusgabenanalysePage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="bg-background p-6 rounded-xl border">
-                <div className="aspect-video bg-muted rounded-md flex items-center justify-center">
-                  <p className="text-muted-foreground text-center p-4">Hier würde ein Screenshot oder Video der Analyse-Funktion erscheinen</p>
+                <h3 className="text-lg font-semibold mb-4 text-center">Beispiel: Monatliche Ausgabenverteilung</h3>
+                <div className="h-72 flex justify-center items-center">
+                  <PieChart width={400} height={280}>
+                    <Pie
+                      data={ausgabenData}
+                      cx={200}
+                      cy={140}
+                      innerRadius={70}
+                      outerRadius={110}
+                      fill="#8884d8"
+                      dataKey="value"
+                      nameKey="name"
+                      paddingAngle={3}
+                    >
+                      {ausgabenData.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={entry.color}
+                          stroke="#ffffff"
+                          strokeWidth={2}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      formatter={(value) => `${Number(value).toLocaleString('de-DE')}€ `}
+                      labelFormatter={(name) => `${name}`}
+                      contentStyle={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '6px',
+                        padding: '8px 12px',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                      }}
+                    />
+                  </PieChart>
+                </div>
+                <div className="text-center mt-4">
+                  <p className="text-sm text-muted-foreground">Gesamtbetrag: {ausgabenData.reduce((sum, item) => sum + item.value, 0).toLocaleString('de-DE')}€</p>
                 </div>
               </div>
               
