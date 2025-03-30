@@ -28,29 +28,24 @@ export default function EinnahmenPage() {
   const [einnahmen, setEinnahmen] = useState<Einnahme[]>([]);
   const [suchbegriff, setSuchbegriff] = useState("");
 
-  // Wenn der Benutzer nicht eingeloggt ist und das Laden abgeschlossen ist, zur Login-Seite umleiten
   useEffect(() => {
     if (!isLoading && !user) {
       router.push('/login');
     }
   }, [user, isLoading, router]);
 
-  // Einnahmen laden
   useEffect(() => {
     setEinnahmen(einnahmenData as Einnahme[]);
   }, []);
 
-  // Gefilterte Einnahmen
   const gefilterteEinnahmen = einnahmen.filter(einnahme => 
     einnahme.beschreibung.toLowerCase().includes(suchbegriff.toLowerCase()) ||
     einnahme.kategorie.toLowerCase().includes(suchbegriff.toLowerCase()) ||
     einnahme.konto.toLowerCase().includes(suchbegriff.toLowerCase())
   );
 
-  // Gesamtbetrag berechnen
   const gesamtEinnahmen = gefilterteEinnahmen.reduce((sum, einnahme) => sum + einnahme.betrag, 0);
 
-  // Wenn noch geladen wird oder kein Benutzer vorhanden ist, zeige Ladebildschirm
   if (isLoading || !user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -72,75 +67,78 @@ export default function EinnahmenPage() {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-7xl mx-auto">
+    <main className="max-w-7xl mx-auto p-6 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-1">Einnahmen</h1>
-          <p className="text-muted-foreground">Verwalten Sie Ihre Einnahmen und Einkommensquellen</p>
+          <h1 className="text-3xl font-bold">Einnahmen</h1>
+          <p className="text-muted-foreground mt-1">Verwalten Sie Ihre Einnahmen und Einkommensquellen</p>
         </div>
-        <Button className="sm:self-start" size="sm">
+        <Button size="sm" className="sm:self-start w-full sm:w-auto">
           <IconPlus className="mr-2 h-4 w-4" />
           Neue Einnahme
         </Button>
-      </div>
+      </header>
 
       {/* Statistiken */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/20 dark:to-green-900/20 border-green-200 dark:border-green-800">
-          <CardHeader className="pb-2">
-            <CardDescription>Gesamteinnahmen</CardDescription>
-            <CardTitle className="text-2xl text-green-700 dark:text-green-400">{gesamtEinnahmen.toFixed(2)} €</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-green-700 dark:text-green-400">Alle Einnahmen</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-2">
-            <CardDescription>Diesen Monat</CardDescription>
-            <CardTitle className="text-2xl">3.850,00 €</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">+12,5% zum Vormonat</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-2">
-            <CardDescription>Haupteinkommensquelle</CardDescription>
-            <CardTitle className="text-2xl">2.500,00 €</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Badge variant="outline" className="bg-muted/50">Gehalt</Badge>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="pb-2">
-            <CardDescription>Kategorien</CardDescription>
-            <CardTitle className="text-2xl">7</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">Einnahme-Kategorien</p>
-          </CardContent>
-        </Card>
-      </div>
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Statistiken</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="bg-gradient-to-b from-green-50 to-transparent border-green-200 dark:from-green-950/20 dark:border-green-800">
+            <CardHeader className="pb-2">
+              <CardDescription>Gesamteinnahmen</CardDescription>
+              <CardTitle className="text-2xl text-green-700 dark:text-green-400">{gesamtEinnahmen.toFixed(2)} €</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-green-700 dark:text-green-400">Alle Einnahmen</p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Diesen Monat</CardDescription>
+              <CardTitle className="text-2xl">3.850,00 €</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">+12,5% zum Vormonat</p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Haupteinkommensquelle</CardDescription>
+              <CardTitle className="text-2xl">2.500,00 €</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Badge variant="outline" className="bg-muted/50">Gehalt</Badge>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="pb-2">
+              <CardDescription>Kategorien</CardDescription>
+              <CardTitle className="text-2xl">7</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Einnahme-Kategorien</p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* Diagramm */}
-      <div>
-        <h2 className="text-xl font-semibold mb-3">Einnahmen-Verlauf</h2>
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Einnahmen-Verlauf</h2>
         <Card>
           <CardContent className="pt-6">
             <ChartAreaInteractive />
           </CardContent>
         </Card>
-      </div>
+      </section>
 
       {/* Einnahmen-Tabelle */}
-      <div>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
+      <section>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
           <h2 className="text-xl font-semibold">Alle Einnahmen</h2>
           <div className="flex gap-2 w-full sm:w-auto max-w-xs">
             <Input 
@@ -154,47 +152,46 @@ export default function EinnahmenPage() {
             </Button>
           </div>
         </div>
+        
         <Card>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b bg-muted/50">
-                    <th className="py-3 px-4 text-left font-medium text-muted-foreground">Beschreibung</th>
-                    <th className="py-3 px-4 text-left font-medium text-muted-foreground">Betrag</th>
-                    <th className="py-3 px-4 text-left font-medium text-muted-foreground">Datum</th>
-                    <th className="py-3 px-4 text-left font-medium text-muted-foreground">Kategorie</th>
-                    <th className="py-3 px-4 text-left font-medium text-muted-foreground">Konto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {gefilterteEinnahmen.length > 0 ? (
-                    gefilterteEinnahmen.map((einnahme) => (
-                      <tr key={einnahme.id} className="border-b hover:bg-muted/50 transition-colors">
-                        <td className="py-3 px-4">{einnahme.beschreibung}</td>
-                        <td className="py-3 px-4 font-medium text-green-600 dark:text-green-400">
-                          {einnahme.betrag.toFixed(2)} €
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground">{new Date(einnahme.datum).toLocaleDateString('de-DE')}</td>
-                        <td className="py-3 px-4">
-                          <Badge variant="outline" className="bg-muted/50">{einnahme.kategorie}</Badge>
-                        </td>
-                        <td className="py-3 px-4 text-muted-foreground">{einnahme.konto}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={5} className="py-8 text-center text-muted-foreground">
-                        Keine Einnahmen gefunden.
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b bg-muted/50">
+                  <th className="py-3 px-4 text-left font-medium text-muted-foreground">Beschreibung</th>
+                  <th className="py-3 px-4 text-left font-medium text-muted-foreground">Betrag</th>
+                  <th className="py-3 px-4 text-left font-medium text-muted-foreground">Datum</th>
+                  <th className="py-3 px-4 text-left font-medium text-muted-foreground">Kategorie</th>
+                  <th className="py-3 px-4 text-left font-medium text-muted-foreground">Konto</th>
+                </tr>
+              </thead>
+              <tbody>
+                {gefilterteEinnahmen.length > 0 ? (
+                  gefilterteEinnahmen.map((einnahme) => (
+                    <tr key={einnahme.id} className="border-b hover:bg-muted/50 transition-colors">
+                      <td className="py-3 px-4">{einnahme.beschreibung}</td>
+                      <td className="py-3 px-4 font-medium text-green-600 dark:text-green-400">
+                        {einnahme.betrag.toFixed(2)} €
                       </td>
+                      <td className="py-3 px-4 text-muted-foreground">{new Date(einnahme.datum).toLocaleDateString('de-DE')}</td>
+                      <td className="py-3 px-4">
+                        <Badge variant="outline" className="bg-muted/50">{einnahme.kategorie}</Badge>
+                      </td>
+                      <td className="py-3 px-4 text-muted-foreground">{einnahme.konto}</td>
                     </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="py-8 text-center text-muted-foreground">
+                      Keine Einnahmen gefunden.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </Card>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 } 
