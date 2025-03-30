@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "beschreibung": "Gehalt",
+    "betrag": 2500.00,
+    "datum": "2024-06-25",
+    "kategorie": "Gehalt",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 2,
+    "beschreibung": "Steuerrückerstattung",
+    "betrag": 750.50,
+    "datum": "2024-06-15",
+    "kategorie": "Steuern",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 3,
+    "beschreibung": "Freelance Projekt",
+    "betrag": 1200.00,
+    "datum": "2024-06-10",
+    "kategorie": "Freiberuflich",
+    "konto": "Geschäftskonto"
+  },
+  {
+    "id": 4,
+    "beschreibung": "Dividende",
+    "betrag": 85.20,
+    "datum": "2024-06-05",
+    "kategorie": "Investition",
+    "konto": "Depot"
+  },
+  {
+    "id": 5,
+    "beschreibung": "Verkauf alter Möbel",
+    "betrag": 150.00,
+    "datum": "2024-06-02",
+    "kategorie": "Sonstiges",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 6,
+    "beschreibung": "Gehalt",
+    "betrag": 2500.00,
+    "datum": "2024-05-25",
+    "kategorie": "Gehalt",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 7,
+    "beschreibung": "Nebenjob",
+    "betrag": 450.00,
+    "datum": "2024-05-18",
+    "kategorie": "Freiberuflich",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 8,
+    "beschreibung": "Mieteinnahmen",
+    "betrag": 800.00,
+    "datum": "2024-05-05",
+    "kategorie": "Miete",
+    "konto": "Immobilienkonto"
+  },
+  {
+    "id": 9,
+    "beschreibung": "Geburtstagsgeschenk",
+    "betrag": 100.00,
+    "datum": "2024-05-02",
+    "kategorie": "Geschenk",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 10,
+    "beschreibung": "Gehalt",
+    "betrag": 2500.00,
+    "datum": "2024-04-25",
+    "kategorie": "Gehalt",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 11,
+    "beschreibung": "Freelance Projekt",
+    "betrag": 950.00,
+    "datum": "2024-04-20",
+    "kategorie": "Freiberuflich",
+    "konto": "Geschäftskonto"
+  },
+  {
+    "id": 12,
+    "beschreibung": "Dividende",
+    "betrag": 90.30,
+    "datum": "2024-04-05",
+    "kategorie": "Investition",
+    "konto": "Depot"
+  }
+] 

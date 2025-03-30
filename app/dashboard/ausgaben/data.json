@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "beschreibung": "Miete",
+    "betrag": 850.00,
+    "datum": "2024-06-01",
+    "kategorie": "Wohnen",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 2,
+    "beschreibung": "Stromrechnung",
+    "betrag": 65.30,
+    "datum": "2024-06-05",
+    "kategorie": "Nebenkosten",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 3,
+    "beschreibung": "Lebensmitteleinkauf",
+    "betrag": 120.45,
+    "datum": "2024-06-08",
+    "kategorie": "Lebensmittel",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 4,
+    "beschreibung": "Restaurantbesuch",
+    "betrag": 58.90,
+    "datum": "2024-06-10",
+    "kategorie": "Essen gehen",
+    "konto": "Kreditkarte"
+  },
+  {
+    "id": 5,
+    "beschreibung": "Tankstelle",
+    "betrag": 70.00,
+    "datum": "2024-06-12",
+    "kategorie": "Transport",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 6,
+    "beschreibung": "Handyrechnung",
+    "betrag": 29.99,
+    "datum": "2024-06-15",
+    "kategorie": "Kommunikation",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 7,
+    "beschreibung": "Kleidung",
+    "betrag": 95.80,
+    "datum": "2024-06-18",
+    "kategorie": "Shopping",
+    "konto": "Kreditkarte"
+  },
+  {
+    "id": 8,
+    "beschreibung": "Internetrechnung",
+    "betrag": 39.95,
+    "datum": "2024-06-20",
+    "kategorie": "Kommunikation",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 9,
+    "beschreibung": "Kinobesuch",
+    "betrag": 32.00,
+    "datum": "2024-06-22",
+    "kategorie": "Freizeit",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 10,
+    "beschreibung": "Lebensmitteleinkauf",
+    "betrag": 85.65,
+    "datum": "2024-06-25",
+    "kategorie": "Lebensmittel",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 11,
+    "beschreibung": "Versicherung",
+    "betrag": 120.00,
+    "datum": "2024-05-03",
+    "kategorie": "Versicherung",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 12,
+    "beschreibung": "Miete",
+    "betrag": 850.00,
+    "datum": "2024-05-01",
+    "kategorie": "Wohnen",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 13,
+    "beschreibung": "Stromrechnung",
+    "betrag": 63.70,
+    "datum": "2024-05-05",
+    "kategorie": "Nebenkosten",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 14,
+    "beschreibung": "Fitnessstudio",
+    "betrag": 45.00,
+    "datum": "2024-05-10",
+    "kategorie": "Gesundheit",
+    "konto": "Girokonto"
+  },
+  {
+    "id": 15,
+    "beschreibung": "Streaming-Dienst",
+    "betrag": 12.99,
+    "datum": "2024-05-15",
+    "kategorie": "Unterhaltung",
+    "konto": "Kreditkarte"
+  }
+] 

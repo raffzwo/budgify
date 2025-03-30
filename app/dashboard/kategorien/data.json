@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Gehalt",
+    "typ": "Einnahme",
+    "farbe": "#4CAF50"
+  },
+  {
+    "id": 2,
+    "name": "Freiberuflich",
+    "typ": "Einnahme",
+    "farbe": "#8BC34A"
+  },
+  {
+    "id": 3,
+    "name": "Investition",
+    "typ": "Einnahme",
+    "farbe": "#CDDC39"
+  },
+  {
+    "id": 4,
+    "name": "Steuern",
+    "typ": "Einnahme",
+    "farbe": "#FFEB3B"
+  },
+  {
+    "id": 5,
+    "name": "Miete",
+    "typ": "Einnahme",
+    "farbe": "#FFC107"
+  },
+  {
+    "id": 6,
+    "name": "Geschenk",
+    "typ": "Einnahme",
+    "farbe": "#FF9800"
+  },
+  {
+    "id": 7,
+    "name": "Sonstiges",
+    "typ": "Einnahme",
+    "farbe": "#FF5722"
+  },
+  {
+    "id": 8,
+    "name": "Wohnen",
+    "typ": "Ausgabe",
+    "farbe": "#F44336"
+  },
+  {
+    "id": 9,
+    "name": "Nebenkosten",
+    "typ": "Ausgabe",
+    "farbe": "#E91E63"
+  },
+  {
+    "id": 10,
+    "name": "Lebensmittel",
+    "typ": "Ausgabe",
+    "farbe": "#9C27B0"
+  },
+  {
+    "id": 11,
+    "name": "Essen gehen",
+    "typ": "Ausgabe",
+    "farbe": "#673AB7"
+  },
+  {
+    "id": 12,
+    "name": "Transport",
+    "typ": "Ausgabe",
+    "farbe": "#3F51B5"
+  },
+  {
+    "id": 13,
+    "name": "Kommunikation",
+    "typ": "Ausgabe",
+    "farbe": "#2196F3"
+  },
+  {
+    "id": 14,
+    "name": "Shopping",
+    "typ": "Ausgabe",
+    "farbe": "#03A9F4"
+  },
+  {
+    "id": 15,
+    "name": "Freizeit",
+    "typ": "Ausgabe",
+    "farbe": "#00BCD4"
+  },
+  {
+    "id": 16,
+    "name": "Gesundheit",
+    "typ": "Ausgabe",
+    "farbe": "#009688"
+  },
+  {
+    "id": 17,
+    "name": "Unterhaltung",
+    "typ": "Ausgabe",
+    "farbe": "#4CAF50"
+  },
+  {
+    "id": 18,
+    "name": "Versicherung",
+    "typ": "Ausgabe",
+    "farbe": "#8BC34A"
+  }
+] 

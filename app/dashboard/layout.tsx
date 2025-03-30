@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
-import { Home, PieChart, CreditCard, Settings, LogOut } from "lucide-react";
+import { Home, PieChart, CreditCard, Settings, LogOut, TrendingUp, Tags } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -43,7 +43,9 @@ export default function DashboardLayout({
 
   const navItems = [
     { href: "/dashboard", icon: Home, label: "Dashboard" },
+    { href: "/dashboard/einnahmen", icon: TrendingUp, label: "Einnahmen" },
     { href: "/dashboard/ausgaben", icon: PieChart, label: "Ausgaben" },
+    { href: "/dashboard/kategorien", icon: Tags, label: "Kategorien" },
     { href: "/dashboard/konten", icon: CreditCard, label: "Konten" },
     { href: "/dashboard/einstellungen", icon: Settings, label: "Einstellungen" },
   ];
