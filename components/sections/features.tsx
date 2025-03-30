@@ -35,18 +35,18 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section className="py-16 bg-muted/50">
-      <div className="container">
+    <section className="py-16 bg-muted/50 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px]">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Funktionen, die deine Finanzen vereinfachen</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Funktionen, die deine Finanzen vereinfachen</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Budgify bietet dir alle Tools, die du benötigst, um deine Finanzen zu verwalten und deine finanziellen Ziele zu erreichen.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-background p-6 rounded-lg border">
+            <div key={index} className="bg-background p-4 sm:p-6 rounded-lg border hover:shadow-md transition-shadow">
               <div className="bg-primary/10 p-3 rounded-full w-fit mb-4 text-primary">
                 {feature.icon}
               </div>

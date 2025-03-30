@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="py-16 md:py-24">
-      <div className="container">
+    <section className="py-16 md:py-24 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-[1400px]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
               Behalte den Überblick über deine Finanzen
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -23,10 +23,10 @@ export function HeroSection() {
               </Link>
             </div>
           </div>
-          <div className="relative h-[400px] rounded-lg overflow-hidden">
+          <div className="relative h-[300px] sm:h-[350px] md:h-[400px] rounded-lg overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg border" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-full max-w-md rounded-md bg-background/95 backdrop-blur p-6 shadow-lg border">
+              <div className="w-full max-w-md rounded-md bg-background/95 backdrop-blur p-4 sm:p-6 shadow-lg border">
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className="font-semibold">Monatsübersicht</h3>
                   <span className="text-sm text-muted-foreground">April 2024</span>
